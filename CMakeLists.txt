@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.6)
+project(EERTR)
+SET(CMAKE_CXX_FLAGS_DEBUG "-Wall -g")
+SET(CMAKE_CXX_FLAGS_RELEASE "-Wall -o3")
+add_subdirectory(src)
