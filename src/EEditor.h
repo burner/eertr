@@ -8,10 +8,10 @@
 
 class EEditor {
 	private:
-		Gtk::Main main;
-		Gtk::Socket sdlSocket;
-		Gtk::Window window;
-		Gtk::VBox sdlBox;
+		Gtk::Main *main;
+		Gtk::Socket *sdlSocket;
+		Gtk::Window *window;
+		Gtk::VBox *sdlBox;
 		SDL_Surface * sdlSurface;
 		ESDLRender *render;
 		int socketHeight;
