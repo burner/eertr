@@ -35,7 +35,7 @@ void EEditor::initialize() {
 	render = new ESDLRender(socketWidth, socketHeight);
 
 	Glib::signal_timeout().connect(sigc::mem_fun(*render, &ESDLRender::run), 5);
-
+	//Glib::signal_timeout().connect(sigc::ptr_fun(&ESDLRender::run), 100);
 	main->run(*window);
 }
 

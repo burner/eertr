@@ -1,8 +1,9 @@
 #include <SDL/SDL.h>
+#include <iostream>
 #include "ESDLRender.h"
 
 ESDLRender::ESDLRender(int x, int y) {
-	if(SDL_Init(SDL_INIT_VIDEO != 0) {
+	if(SDL_Init(SDL_INIT_VIDEO != 0)) {
 		std::cout<<"Unable to init SDL"<<std::endl;
 		exit(0);
 	}
@@ -14,9 +15,9 @@ ESDLRender::ESDLRender(int x, int y) {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	int flags = SDL_OPENGL;
-	ESDLRender::sdlSurface = SDL_SetVideoMode(x, y, 32, flags);
+	sdlSurface = SDL_SetVideoMode(x, y, 32, flags);
 
-	if(screen == 0) {
+	if(sdlSurface == 0) {
 		std::cout<<"Unable to setup VideoMode"<<std::endl;
 		exit(0);
 	}
@@ -78,7 +79,7 @@ void ESDLRender::resize(int x, int y) {
 	glLoadIdentity();
 }
 
-void ESDLRender::run() {
+bool ESDLRender::run() {
 	while(processEvents())	{
 		ESDLRender::draw();
 		SDL_GL_SwapBuffers();

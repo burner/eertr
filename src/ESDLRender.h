@@ -8,7 +8,7 @@ class ESDLRender {
 		~ESDLRender();
 
 		SDL_Surface *sdlSurface;
-		virtual void run();
+		virtual bool run();
 		virtual void draw();
 		virtual void resize(int x, int y);
 		virtual bool processEvents();
