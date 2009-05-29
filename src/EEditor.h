@@ -3,9 +3,8 @@
 #include <SDL/SDL.h>
 #include "ESDLRender.h"
 
-#ifndef EEditor
-#define EEditor
-
+#ifndef EEDITOR
+#define EEDITOR
 class EEditor {
 	private:
 		Gtk::Main *main;
