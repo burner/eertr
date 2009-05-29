@@ -13,6 +13,7 @@ class EEditor {
 		Gtk::VBox *sdlBox;
 		SDL_Surface * sdlSurface;
 		ESDLRender *render;
+		
 		int socketHeight;
 		int socketWidth;
 
