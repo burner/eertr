@@ -1,27 +1,20 @@
-#include <gtkmm.h>
-#include <gtkmm/socket.h>
-#include <SDL/SDL.h>
-#include "ESDLRender.h"
+#include <wx/wxprec.h>
+#include <wx/wx.h>
+#include "EEditorFrame.h"
+#include "EEditorSDLPanel.h"
 
 #ifndef EEDITOR
 #define EEDITOR
-class EEditor {
-	private:
-		Gtk::Main *main;
-		Gtk::Socket *sdlSocket;
-		Gtk::Window *window;
-		Gtk::VBox *sdlBox;
-		SDL_Surface * sdlSurface;
-		ESDLRender *render;
-		
-		int socketHeight;
-		int socketWidth;
+class EEditor : public wxApp {
+  DECLARE_CLASS(EEditor)
 
-	public:
-		EEditor(int argc, char ** argv);
-		~EEditor();
-		void sdlClear(void); 
-		void initialize();
-		SDL_Surface* obtSDLSurface();
+  private:
+	///Main EEditor frame
+	EEditorFrame *frame;
+
+  public:
+	bool OnInit();
+	int OnRun();
+	int OnExit();
 };
 #endif

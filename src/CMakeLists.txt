@@ -1,16 +1,17 @@
 include_directories(.)
-link_directories(
-	${GTKMM_LIBARY_DIRS})
 include_directories(
-	${GTKMM_INCLUDE_DIRS})
+	${wxWidgets_INCLUDE_DIRS})
 add_executable(EERTR 
-	main.cpp 
-	Vec3f.h Vec3f.cpp 
+	Vec3f.h Vec3f.cpp
 	Tri.h Tri.cpp 
+	TexCoord2f.h TexCoord2f.cpp
 	ObjLoader.h ObjLoader.cpp 
 	GraphNode.h GraphNode.cpp
 	Obj.h 
-	EEditor.h EEditor.cpp 
-	ESDLRender.h ESDLRender.cpp)
+	#ESDLRender.h ESDLRender.cpp
+	#ESDLEditorRender.h ESDLEditorRender.cpp
+	EEditor.h EEditor.cpp
+	EEditorFrame.h EEditorFrame.cpp
+	EEditorSDLPanel.h EEditorSDLPanel.cpp)
 target_link_libraries(EERTR
-	${GTKMM_LIBRARIES})
+	${wxWidgets_LIBRARIES})

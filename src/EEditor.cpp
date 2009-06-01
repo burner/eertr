@@ -1,41 +1,36 @@
-#include <glib.h>
-#include <gtkmm.h>
-#include <gtkmm/socket.h>
-#include <SDL/SDL.h>
+#include <wx/wx.h>
+#include <iostream>
 #include "EEditor.h"
-#include "ESDLRender.h"
+#include "EEditorFrame.h"
+#include "EEditorSDLPanel.h"
+bool EEditor::OnInit() {
+  frame = new EEditorFrame;
+  frame->SetClientSize(800, 480);
+  frame->Centre();
+  frame->Show();
 
-EEditor::EEditor(int argc, char ** argv) {
-	main = new Gtk::Main(argc, argv);
-	socketWidth = 1280;
-	socketHeight = 720;
-	window = new Gtk::Window();
-	window->set_title("EERTR EDITOR");
-	sdlSocket = new Gtk::Socket();
-	sdlSocket->set_size_request(socketWidth, socketHeight);
-	window->set_border_width(6);
+  SetTopWindow(frame);
+
+  return true;
 }
 
-EEditor::~EEditor() {
-	if(sdlSurface) 
-		SDL_FreeSurface(sdlSurface);
+int EEditor::OnRun() {
+  if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+	std::cerr<<"Unable to init SDL: "<<SDL_GetError()<<std::endl;
+	return -1;
+  }
+  wxIdleEvent event;
+  event.SetEventObject(&frame->getPanel());
+  frame->getPanel().AddPendingEvent(event);
+
+  // start the main loop
+  return wxApp::OnRun();
 }
 
-void EEditor::initialize() {
-	sdlBox = new Gtk::VBox();
-	sdlBox->pack_start(*sdlSocket, false, false);
-	window->add(*sdlBox);
-	
-	std::stringstream sdlhack;
-	sdlhack<<"SDL_WINDOWID=" <<sdlSocket->get_id() << std::ends;
-	char* winhack=new char[32];
-	sprintf(winhack,sdlhack.str().c_str());
-	SDL_putenv(winhack);
+int EEditor::OnExit() {
+  SDL_Quit();
 
-	render = new ESDLRender(socketWidth, socketHeight);
-
-	Glib::signal_timeout().connect(sigc::mem_fun(*render, &ESDLRender::run), 5);
-	//Glib::signal_timeout().connect(sigc::ptr_fun(&ESDLRender::run), 100);
-	main->run(*window);
+  return wxApp::OnExit();
 }
-
+IMPLEMENT_CLASS(EEditor, wxApp);
+IMPLEMENT_APP(EEditor)
