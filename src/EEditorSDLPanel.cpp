@@ -11,12 +11,12 @@ inline void EEditorSDLPanel::onEraseBackground(wxEraseEvent &) {
 
 IMPLEMENT_CLASS(EEditorSDLPanel, wxPanel)
 BEGIN_EVENT_TABLE(EEditorSDLPanel, wxPanel)
-  EVT_PAINT(EEditorSDLPanel::onPaint)
-  EVT_ERASE_BACKGROUND(EEditorSDLPanel::onEraseBackground)
-  EVT_IDLE(EEditorSDLPanel::onIdle)
 END_EVENT_TABLE()
 
 EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL), screen(0) {
+  Connect(wxEVT_PAINT, wxPaintEventHandler(EEditorSDLPanel::onPaint));
+  Connect(wxEVT_IDLE, wxIdleEventHandler(EEditorSDLPanel::onIdle));
+  Connect(wxEVT_ERASE_BACKGROUND, wxEraseEventHandler(EEditorSDLPanel::onEraseBackground));
   wxSize size(800,480);
   SetMinSize(size);
   SetMaxSize(size);
