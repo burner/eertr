@@ -4,6 +4,7 @@
 #include <wx/image.h>
 #include "EEditorFrame.h"
 #include "EEditorSDLPanel.h"
+#include "ESDLEditorRender.h"
 
 inline void EEditorSDLPanel::onEraseBackground(wxEraseEvent &) {
   
@@ -20,6 +21,7 @@ EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL),
   wxSize size(800,480);
   SetMinSize(size);
   SetMaxSize(size);
+  edRender = new ESDLEditorRender(800,480);
 }
 
 EEditorSDLPanel::~EEditorSDLPanel() {
@@ -39,7 +41,7 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
 	}
   }
   // create a bitmap from our pixel data
-  wxBitmap bmp(wxImage(screen->w, screen->h, static_cast<unsigned char *>(screen->pixels), true));
+  wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h, static_cast<unsigned char *>(screen->pixels), true));
 
   // unlock the screen
   if (SDL_MUSTLOCK(screen)) {
@@ -51,8 +53,8 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
 }
 void EEditorSDLPanel::onIdle(wxIdleEvent &) {
     // create the SDL_Surface
-    createScreen();
-
+    //createScreen();
+/*
     // Lock surface if needed
     if (SDL_MUSTLOCK(screen)) {
         if (SDL_LockSurface(screen) < 0) {
@@ -86,7 +88,9 @@ void EEditorSDLPanel::onIdle(wxIdleEvent &) {
     if (SDL_MUSTLOCK(screen)) {
         SDL_UnlockSurface(screen);
     }
-
+*/
+	edRender->run();
+	
     // refresh the panel
     Refresh(false);
 
