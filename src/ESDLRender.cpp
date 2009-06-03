@@ -1,9 +1,10 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 #include <iostream>
 #include "ESDLRender.h"
 
 ESDLRender::ESDLRender(int x, int y) {
-	if(SDL_Init(SDL_INIT_VIDEO != 0)) {
+	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
 		std::cout<<"Unable to init SDL"<<std::endl;
 		exit(0);
 	}
@@ -84,6 +85,7 @@ bool ESDLRender::run() {
 		ESDLRender::draw();
 		SDL_GL_SwapBuffers();
 	}
+	return true;
 }
 
 void ESDLRender::draw() {

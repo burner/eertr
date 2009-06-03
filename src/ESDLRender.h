@@ -3,6 +3,8 @@
 #ifndef ESDLRENDER
 #define ESDLRENDER
 class ESDLRender {
+	protected:
+	  unsigned int m_Keys[SDLK_LAST];
 	public:
 		ESDLRender(int x, int y);
 		~ESDLRender();

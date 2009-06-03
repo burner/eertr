@@ -8,8 +8,8 @@ add_executable(EERTR
 	ObjLoader.h ObjLoader.cpp 
 	GraphNode.h GraphNode.cpp
 	Obj.h 
-	#ESDLRender.h ESDLRender.cpp
-	#ESDLEditorRender.h ESDLEditorRender.cpp
+	ESDLRender.h ESDLRender.cpp
+	ESDLEditorRender.h ESDLEditorRender.cpp
 	EEditor.h EEditor.cpp
 	EEditorFrame.h EEditorFrame.cpp
 	EEditorSDLPanel.h EEditorSDLPanel.cpp)
