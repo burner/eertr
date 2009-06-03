@@ -21,7 +21,7 @@ BEGIN_EVENT_TABLE(EEditorFrame, wxFrame)
 END_EVENT_TABLE()
 
 EEditorFrame::EEditorFrame() {
-    Create(0, IDF_FRAME, wxT("wx-sdl Frame"), wxDefaultPosition,
+    Create(0, IDF_FRAME, wxT("EEditor"), wxDefaultPosition,
            wxDefaultSize, wxCAPTION | wxSYSTEM_MENU |
            wxMINIMIZE_BOX | wxCLOSE_BOX);
 

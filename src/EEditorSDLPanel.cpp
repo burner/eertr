@@ -1,7 +1,9 @@
 #include <wx/wx.h>
+#include <wx/wxprec.h>
 #include <SDL/SDL.h>
 #include <wx/dcbuffer.h>
 #include <wx/image.h>
+#include <iostream>
 #include "EEditorFrame.h"
 #include "EEditorSDLPanel.h"
 #include "ESDLEditorRender.h"
@@ -22,6 +24,7 @@ EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL),
   SetMinSize(size);
   SetMaxSize(size);
   edRender = new ESDLEditorRender(800,480);
+  screen = edRender->sdlSurface;
 }
 
 EEditorSDLPanel::~EEditorSDLPanel() {
@@ -31,6 +34,7 @@ EEditorSDLPanel::~EEditorSDLPanel() {
 }
 
 void EEditorSDLPanel::onPaint(wxPaintEvent &) {
+ 
   if(!screen) {
 	return;
   }
@@ -41,17 +45,20 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
 	}
   }
   // create a bitmap from our pixel data
-  wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h, static_cast<unsigned char *>(screen->pixels), true));
+  wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h, static_cast<unsigned char *>(edRender->sdlSurface->pixels), true));
+
 
   // unlock the screen
   if (SDL_MUSTLOCK(screen)) {
 	SDL_UnlockSurface(screen);
   }
-
+  
+  
   // paint the screen
   wxBufferedPaintDC dc(this, bmp);
 }
 void EEditorSDLPanel::onIdle(wxIdleEvent &) {
+
     // create the SDL_Surface
     //createScreen();
 /*

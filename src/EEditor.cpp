@@ -15,10 +15,10 @@ bool EEditor::OnInit() {
 }
 
 int EEditor::OnRun() {
-  if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+  /*if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 	std::cerr<<"Unable to init SDL: "<<SDL_GetError()<<std::endl;
 	return -1;
-  }
+  }*/
   wxIdleEvent event;
   event.SetEventObject(&frame->getPanel());
   frame->getPanel().AddPendingEvent(event);

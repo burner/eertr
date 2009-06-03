@@ -89,6 +89,14 @@ bool ESDLRender::run() {
 }
 
 void ESDLRender::draw() {
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.8, 0.4, 0.0, 0.0);
+	// Move Left 1.5 Units And Into The Screen 6.0
+	glBegin(GL_TRIANGLES);						// Drawing Using Triangles
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f( 0.0f, 1.0f, 0.0f);				// Top
+		glVertex3f(-1.0f,-1.0f, 0.0f);				// Bottom Left
+		glVertex3f( 1.0f,-1.0f, 0.0f);				// Bottom Right
+	glEnd();							// Finished Drawing The Triangle
+	SDL_GL_SwapBuffers();
 }
