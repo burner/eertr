@@ -33,8 +33,7 @@ EEditorSDLPanel::~EEditorSDLPanel() {
   }
 }
 
-void EEditorSDLPanel::onPaint(wxPaintEvent &) {
- 
+void EEditorSDLPanel::onPaint(wxPaintEvent &) { 
   if(!screen) {
 	return;
   }
@@ -45,7 +44,7 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
 	}
   }
   // create a bitmap from our pixel data
-  wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h, static_cast<unsigned char *>(edRender->sdlSurface->pixels), true));
+  wxBitmap bmp(wxImage(screen->w, screen->h, static_cast<unsigned char *>(screen->pixels), true));
 
 
   // unlock the screen
@@ -58,59 +57,17 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
   wxBufferedPaintDC dc(this, bmp);
 }
 void EEditorSDLPanel::onIdle(wxIdleEvent &) {
-
-    // create the SDL_Surface
-    //createScreen();
-/*
-    // Lock surface if needed
-    if (SDL_MUSTLOCK(screen)) {
-        if (SDL_LockSurface(screen) < 0) {
-            return;
-        }
-    }
-
-    // Ask SDL for the time in milliseconds
-    int tick = SDL_GetTicks();
-
-    for (int y = 0; y < 480; y++) {
-        for (int x = 0; x < 800; x++) {
-            wxUint32 color = (y * y) + (x * x) + tick;
-            wxUint8 *pixels = static_cast<wxUint8 *>(screen->pixels) +
-                              (y * screen->pitch) +
-                              (x * screen->format->BytesPerPixel);
-
-            #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-                pixels[0] = color & 0xFF;
-                pixels[1] = (color >> 8) & 0xFF;
-                pixels[2] = (color >> 16) & 0xFF;
-            #else
-                pixels[0] = (color >> 16) & 0xFF;
-                pixels[1] = (color >> 8) & 0xFF;
-                pixels[2] = color & 0xFF;
-            #endif
-        }
-    }
-
-    // Unlock if needed
-    if (SDL_MUSTLOCK(screen)) {
-        SDL_UnlockSurface(screen);
-    }
-*/
-	edRender->run();
-	
-    // refresh the panel
-    Refresh(false);
-
-    // throttle to keep from flooding the event queue
-    wxMilliSleep(33);
+  edRender->run();
+  // refresh the panel
+  Refresh(false);
+  // throttle to keep from flooding the event queue
+  wxMilliSleep(33);
 }
 
 void EEditorSDLPanel::createScreen() {
     if (!screen) {
         int width, height;
         GetSize(&width, &height);
-
-        screen = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height,
-                                      24, 0, 0, 0, 0);
+        screen = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height,24, 0, 0, 0, 0);
     }
 }
