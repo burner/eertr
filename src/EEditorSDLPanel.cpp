@@ -44,7 +44,8 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
 	}
   }
   // create a bitmap from our pixel data
-  wxBitmap bmp(wxImage(screen->w, screen->h, static_cast<unsigned char *>(screen->pixels), true));
+  wxBitmap bmp(wxImage(screen->w, screen->h,
+	      static_cast<unsigned char *>(screen->pixels), true));
 
 
   // unlock the screen
