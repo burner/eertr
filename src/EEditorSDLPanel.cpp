@@ -46,7 +46,6 @@ void EEditorSDLPanel::onPaint(wxPaintEvent &) {
   wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h,
 	static_cast<unsigned char *>(edRender->sdlSurface->pixels), true));
 
-
   // unlock the screen
   if (SDL_MUSTLOCK(edRender->sdlSurface)) {
 	SDL_UnlockSurface(edRender->sdlSurface);
