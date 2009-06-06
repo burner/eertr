@@ -17,6 +17,7 @@ ESDLRender::ESDLRender(int x, int y) {
 
 	int flags = SDL_OPENGL;
 	sdlSurface = SDL_SetVideoMode(x, y, 32, flags);
+	//sdlSurface = SDL_CreateRGBSurface(SDL_SWSURFACE,x,y,24, 0, 0, 0, 0);
 
 	if(sdlSurface == 0) {
 		std::cout<<"Unable to setup VideoMode"<<std::endl;

@@ -16,7 +16,7 @@ IMPLEMENT_CLASS(EEditorSDLPanel, wxPanel)
 BEGIN_EVENT_TABLE(EEditorSDLPanel, wxPanel)
 END_EVENT_TABLE()
 
-EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL), screen(0) {
+EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL){
   Connect(wxEVT_PAINT, wxPaintEventHandler(EEditorSDLPanel::onPaint));
   Connect(wxEVT_IDLE, wxIdleEventHandler(EEditorSDLPanel::onIdle));
   Connect(wxEVT_ERASE_BACKGROUND, wxEraseEventHandler(EEditorSDLPanel::onEraseBackground));
@@ -24,32 +24,32 @@ EEditorSDLPanel::EEditorSDLPanel(wxWindow *parent) : wxPanel(parent, IDP_PANEL),
   SetMinSize(size);
   SetMaxSize(size);
   edRender = new ESDLEditorRender(800,480);
-  screen = edRender->sdlSurface;
 }
 
 EEditorSDLPanel::~EEditorSDLPanel() {
-  if(screen) {
-	SDL_FreeSurface(screen);
+  if(edRender->sdlSurface) {
+	SDL_FreeSurface(edRender->sdlSurface);
   }
 }
 
 void EEditorSDLPanel::onPaint(wxPaintEvent &) { 
-  if(!screen) {
+  if(!edRender->sdlSurface) {
 	return;
   }
 
-  if(SDL_MUSTLOCK(screen)) {
-	if(SDL_LockSurface(screen) < 0) {
+  if(SDL_MUSTLOCK(edRender->sdlSurface)) {
+	if(SDL_LockSurface(edRender->sdlSurface) < 0) {
 	  return;
 	}
   }
   // create a bitmap from our pixel data
-  wxBitmap bmp(wxImage(screen->w, screen->h, static_cast<unsigned char *>(screen->pixels), true));
+  wxBitmap bmp(wxImage(edRender->sdlSurface->w, edRender->sdlSurface->h,
+	static_cast<unsigned char *>(edRender->sdlSurface->pixels), true));
 
 
   // unlock the screen
-  if (SDL_MUSTLOCK(screen)) {
-	SDL_UnlockSurface(screen);
+  if (SDL_MUSTLOCK(edRender->sdlSurface)) {
+	SDL_UnlockSurface(edRender->sdlSurface);
   }
   
   
@@ -62,12 +62,4 @@ void EEditorSDLPanel::onIdle(wxIdleEvent &) {
   Refresh(false);
   // throttle to keep from flooding the event queue
   wxMilliSleep(33);
-}
-
-void EEditorSDLPanel::createScreen() {
-    if (!screen) {
-        int width, height;
-        GetSize(&width, &height);
-        screen = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height,24, 0, 0, 0, 0);
-    }
 }

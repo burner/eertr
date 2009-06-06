@@ -10,12 +10,11 @@ class EEditorSDLPanel : public wxPanel {
   DECLARE_EVENT_TABLE()
 
   private:	
-	SDL_Surface *screen;
+	//SDL_Surface *screen;
 	ESDLEditorRender *edRender;
 	void onPaint(wxPaintEvent &);
 	void onEraseBackground(wxEraseEvent &);
 	void onIdle(wxIdleEvent &);
-	void createScreen();
 
   public:	
 	EEditorSDLPanel(wxWindow *parent);
