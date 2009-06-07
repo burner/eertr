@@ -8,10 +8,11 @@ add_executable(EERTR
 	TexCoord2f.h TexCoord2f.cpp
 	ObjLoader.h ObjLoader.cpp 
 	GraphNode.h GraphNode.cpp
-	Obj.h 
+	Obj.h Obj.cpp
 	Eertr.h Eertr.cpp
 	EertrWindow.h EertrWindow.cpp
 	Timer.h Timer.cpp
+	Camera.h Camera.cpp
 	#ESDLRender.h ESDLRender.cpp
 	#ESDLEditorRender.h ESDLEditorRender.cpp
 	#EEditor.h EEditor.cpp

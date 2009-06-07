@@ -6,9 +6,9 @@
 #define OBJ
 class Obj {
 	private:
-		std::vector<Vec3f*> vertices;
-		std::vector<Vec3f*> normals;
-		std::vector<Tri*> triangle;
+		std::vector<Vec3f*> *vertices;
+		std::vector<Vec3f*> *normals;
+		std::vector<Tri*> *triangle;
 
 	public:
 		Obj(std::string filename);

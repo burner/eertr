@@ -10,9 +10,10 @@ Eertr::Eertr(int height, int width) {
 	if(!window.createWindow(width, height, 32, false)) {
 		return;
 	}
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	
+	//Make the Info Stats bar
 	TwInit(TW_OPENGL, NULL);
-	infoBar = TwNewBar("Infobar");
+	infoBar = TwNewBar("Time Stats");
 	TwAddVarRO(infoBar, "WindowWidth", TW_TYPE_INT32, &width,
 			" label='Window width' help='Width of the graphics window in pixels' ");
 	TwAddVarRO(infoBar, "WindowHeight", TW_TYPE_INT32, &height,
@@ -35,6 +36,19 @@ Eertr::~Eertr(){
 void Eertr::draw() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	cam.placeCam();
+	
+	glTranslatef(-1.5f,0.0f,-6.0f);		
+	glBegin(GL_QUADS);					// Start Drawing Quads
+		glColor3f(1.0f,0.0f,0.0f);
+		glVertex3f(-1.0f, 1.0f, 0.0f);			// Left And Up 1 Unit (Top Left)
+		glColor3f(1.0f,1.0f,0.0f);
+		glVertex3f( 1.0f, 1.0f, 0.0f);			// Right And Up 1 Unit (Top Right)
+		glColor3f(1.0f,1.0f,1.0f);
+		glVertex3f( 1.0f,-1.0f, 0.0f);			// Right And Down One Unit (Bottom Right)
+		glColor3f(0.0f,1.0f,0.0f);
+		glVertex3f(-1.0f,-1.0f, 0.0f);			// Left And Down One Unit (Bottom Left)
+	glEnd();	
 }
 
 void Eertr::resize(int x, int y) {

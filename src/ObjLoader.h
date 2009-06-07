@@ -18,7 +18,7 @@ class ObjLoader {
 
 	public:
 		ObjLoader(std::string filename);
-		std::vector<Vec3f*>* getVectors();
+		std::vector<Vec3f*>* getVertices();
 		std::vector<Tri*>* getTriangle();
 		std::vector<Vec3f*>* getNormals();
 };

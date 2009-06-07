@@ -1,5 +1,6 @@
 #include "EertrWindow.h"
 #include "Timer.h"
+#include "Camera.h"
 #include <SDL/SDL.h>
 #include <AntTweakBar.h>
 #include <iostream>
@@ -19,6 +20,8 @@ class Eertr {
 	  
 	  int fps;
 	  int frames;
+	  
+	  Camera cam;
 	  
 	  void draw();
 	  void resize(int x, int y);

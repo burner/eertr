@@ -105,7 +105,7 @@ void ObjLoader::readFaceLine(string line) {
 	return;
 }
 
-vector<Vec3f*>* ObjLoader::getVectors() {
+vector<Vec3f*>* ObjLoader::getVertices() {
 	return vectors;
 }
 
