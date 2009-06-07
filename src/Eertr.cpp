@@ -1,9 +1,16 @@
 #include "Eertr.h"
-Eertr::Eertr() {
-	if(!window.createWindow(1024, 600, 32, false)) {
+Eertr::Eertr(int height, int width) {
+	if(!window.createWindow(width, height, 32, false)) {
 		return;
 	}
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+	TwInit(TW_OPENGL, NULL);
+	infoBar = TwNewBar("Infobar");
+	TwAddVarRO(infoBar, "WindowWidth", TW_TYPE_INT32, &width,
+			" label='Window width' help='Width of the graphics window in pixels' ");
+	TwAddVarRO(infoBar, "WindowHeight", TW_TYPE_INT32, &height,
+			" label='Window height' help='Height of the graphics window in pixels' ");
+
 }
 
 Eertr::~Eertr(){
@@ -15,7 +22,7 @@ void Eertr::draw() {
 }
 
 void Eertr::resize(int x, int y) {
-	std::cout << "Resizing Window to " << x << "x" << y << std::endl;
+	//std::cout << "Resizing Window to " << x << "x" << y << std::endl;
 
 	if (y <= 0) {
 		y = 1;
@@ -32,9 +39,12 @@ void Eertr::resize(int x, int y) {
 }
 
 bool Eertr::processEvents() {
+	int handled;
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) {
+		handled = TwEventSDL(&event);
+if( !handled )    {
 		switch (event.type) {
 		// Quit event
 			case SDL_QUIT: {
@@ -70,12 +80,14 @@ bool Eertr::processEvents() {
 			}
 		}
 	}
+}
 	return true;
 }
 
 void Eertr::run() {
 	while(processEvents()) {
 		draw();
+		TwDraw();
 		SDL_GL_SwapBuffers();
 	}
 }

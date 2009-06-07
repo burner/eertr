@@ -1,11 +1,12 @@
 #include "EertrWindow.h"
 #include <SDL/SDL.h>
+#include <AntTweakBar.h>
 #include <iostream>
 
 #ifndef EERTR
 #define EERTR
 class Eertr {
-	protected:
+	private:
 	  EertrWindow window;
 	  unsigned int keys[SDLK_LAST];
 	  
@@ -13,8 +14,10 @@ class Eertr {
 	  void resize(int x, int y);
 	  bool processEvents();
 
+	  TwBar *infoBar;
+
 	public:
-		Eertr();
+		Eertr(int height, int width);
 		~Eertr(); 
 		void run();
 };

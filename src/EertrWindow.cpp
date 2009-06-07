@@ -61,11 +61,3 @@ void EertrWindow::setSize(int width, int height) {
 	height = height;
 	width = width;
 }
-
-int EertrWindow::getHeight() {
-	return height;
-}
-
-int EertrWindow::getWidth() {
-	return width;
-}
