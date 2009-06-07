@@ -1,4 +1,5 @@
 #include "EertrWindow.h"
+#include "Timer.h"
 #include <SDL/SDL.h>
 #include <AntTweakBar.h>
 #include <iostream>
@@ -9,6 +10,15 @@ class Eertr {
 	private:
 	  EertrWindow window;
 	  unsigned int keys[SDLK_LAST];
+	  bool events;
+	  
+	  int timeProcessEvents;
+	  int timeTwDraw;
+	  int timeDraw;
+	  int timeSwapBuffer;
+	  
+	  int fps;
+	  int frames;
 	  
 	  void draw();
 	  void resize(int x, int y);

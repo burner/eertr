@@ -11,6 +11,7 @@ add_executable(EERTR
 	Obj.h 
 	Eertr.h Eertr.cpp
 	EertrWindow.h EertrWindow.cpp
+	Timer.h Timer.cpp
 	#ESDLRender.h ESDLRender.cpp
 	#ESDLEditorRender.h ESDLEditorRender.cpp
 	#EEditor.h EEditor.cpp

@@ -1,5 +1,12 @@
 #include "Eertr.h"
 Eertr::Eertr(int height, int width) {
+	events = true;
+	Timer::createTimer("fpsTicks");
+	Timer::createTimer("proEvents");
+	Timer::createTimer("draw");
+	Timer::createTimer("drawTw");
+	Timer::createTimer("swapBuf");
+	
 	if(!window.createWindow(width, height, 32, false)) {
 		return;
 	}
@@ -10,7 +17,16 @@ Eertr::Eertr(int height, int width) {
 			" label='Window width' help='Width of the graphics window in pixels' ");
 	TwAddVarRO(infoBar, "WindowHeight", TW_TYPE_INT32, &height,
 			" label='Window height' help='Height of the graphics window in pixels' ");
-
+	TwAddVarRO(infoBar, "FPS", TW_TYPE_INT32, &fps,
+			" label='FPS' help='Frames per second' ");
+	TwAddVarRO(infoBar, "TimeProcessEvents", TW_TYPE_INT32, &timeProcessEvents,
+		" label='EventProcessTime' help='time to process events in ms' ");
+	TwAddVarRO(infoBar, "TWDrawTime", TW_TYPE_INT32, &timeTwDraw,
+		" label='TWDrawTime' help='time to draw TW' ");
+	TwAddVarRO(infoBar, "DrawTime", TW_TYPE_INT32, &timeDraw,
+		" label='DrawTime' help='time to draw' ");
+	TwAddVarRO(infoBar, "SwapBuffer", TW_TYPE_INT32, &timeSwapBuffer,
+		" label='SwapBufferTime' help='time to swap buffer' ");
 }
 
 Eertr::~Eertr(){
@@ -44,9 +60,9 @@ bool Eertr::processEvents() {
 
 	while (SDL_PollEvent(&event)) {
 		handled = TwEventSDL(&event);
-if( !handled )    {
-		switch (event.type) {
-		// Quit event
+		if( !handled )    {
+			switch (event.type) {
+			// Quit event
 			case SDL_QUIT: {
 				// Return false because we are quitting.
 				return false;
@@ -85,9 +101,27 @@ if( !handled )    {
 }
 
 void Eertr::run() {
-	while(processEvents()) {
+	while(events) {
+		Timer::reset("proEvents");
+		events = processEvents();
+		timeProcessEvents = Timer::read("proEvents");
+		//calculate FPS
+		if(Timer::read("fpsTicks") >= 1000) {
+			Timer::reset("fpsTicks");
+			fps = frames;
+			frames = 0;
+		} else {
+			frames++;
+		}
+		
+		Timer::reset("draw");
 		draw();
+		timeDraw = Timer::read("draw");
+		Timer::reset("drawTw");
 		TwDraw();
+		timeTwDraw = Timer::read("drawTw");
+		Timer::reset("swapBuf");
 		SDL_GL_SwapBuffers();
+		timeSwapBuffer = Timer::read("swapBuf");
 	}
 }
