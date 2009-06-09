@@ -9,10 +9,12 @@ add_executable(EERTR
 	ObjLoader.h ObjLoader.cpp 
 	GraphNode.h GraphNode.cpp
 	Obj.h Obj.cpp
+	ObjIns.h
 	Eertr.h Eertr.cpp
 	EertrWindow.h EertrWindow.cpp
 	Timer.h Timer.cpp
 	Camera.h Camera.cpp
+	EertXMLParse.h EertXMLParse.cpp
 	#ESDLRender.h ESDLRender.cpp
 	#ESDLEditorRender.h ESDLEditorRender.cpp
 	#EEditor.h EEditor.cpp
