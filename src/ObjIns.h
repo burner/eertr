@@ -14,6 +14,6 @@ class ObjIns {
 		Vec3f rot;
 		
 		ObjIns();
-		draw();
+		void draw();
 };
 #endif
