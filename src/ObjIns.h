@@ -5,13 +5,13 @@
 #ifndef OBJINS
 #define OBJINS
 class ObjIns {
-	private:
-		unsigned id;
-		std::string name;
-		Obj associatedObj;
 	public:
-		Vec3f loc;
-		Vec3f rot;
+		unsigned id;
+		std::string *name;
+		std::string *associatedObj;
+		
+		Vec3f *loc;
+		Vec3f *rot;
 		
 		ObjIns();
 		void draw();

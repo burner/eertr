@@ -5,9 +5,10 @@
 #define GRAPHNODE
 class GraphNode {
 	private:
+		GraphNode *parent;
+	protected:
 		//SceneGraph variable
 		std::vector<GraphNode*> childs;
-		GraphNode *parent;
 
 		//Object Varibale
 		Vec3f *position;
@@ -16,6 +17,8 @@ class GraphNode {
 
 	public:
 		GraphNode(GraphNode *parent, Vec3f *position, Vec3f *rotation, ObjIns *mesh);
+		GraphNode(GraphNode *parent, Vec3f *position, Vec3f *rotation);
+		GraphNode();
 		~GraphNode();
 		void insertChild(GraphNode *child);
 		void removeChild(GraphNode *child);

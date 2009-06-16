@@ -9,7 +9,8 @@ add_executable(EERTR
 	ObjLoader.h ObjLoader.cpp 
 	GraphNode.h GraphNode.cpp
 	Obj.h Obj.cpp
-	ObjIns.h
+	GraphRoot.h GraphRoot.cpp
+	ObjIns.h ObjIns.cpp
 	Eertr.h Eertr.cpp
 	EertrWindow.h EertrWindow.cpp
 	Timer.h Timer.cpp
