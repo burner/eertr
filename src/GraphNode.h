@@ -1,11 +1,10 @@
 #include <vector>
+#include <string>
 #include "prim/Vec3f.h"
 #include "ObjIns.h"
 #ifndef GRAPHNODE
 #define GRAPHNODE
 class GraphNode {
-	private:
-		GraphNode *parent;
 	protected:
 		//SceneGraph variable
 		std::vector<GraphNode*> childs;
@@ -16,6 +15,7 @@ class GraphNode {
 		ObjIns *mesh;
 
 	public:
+		GraphNode *parent;
 		GraphNode(GraphNode *parent, Vec3f *position, Vec3f *rotation, ObjIns *mesh);
 		GraphNode(GraphNode *parent, Vec3f *position, Vec3f *rotation);
 		GraphNode();

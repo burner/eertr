@@ -16,3 +16,7 @@ GraphNode::GraphNode(GraphNode *parent, Vec3f *position, Vec3f *rotation) {
 
 GraphNode::GraphNode() {
 }
+
+void GraphNode::insertChild(GraphNode *child) {
+	this->childs.push_back(child);
+}
