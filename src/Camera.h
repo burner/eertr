@@ -1,4 +1,4 @@
-#include "Vec3f.h"
+#include "prim/Vec3f.h"
 #ifndef CAMERA
 #define CAMERA
 class Camera {

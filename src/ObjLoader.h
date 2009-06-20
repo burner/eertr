@@ -1,5 +1,5 @@
-#include "Vec3f.h"
-#include "Tri.h"
+#include "prim/Vec3f.h"
+#include "prim/Tri.h"
 #include <vector>
 #include <string>
 #ifndef OBJLOADER

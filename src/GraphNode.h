@@ -1,5 +1,5 @@
 #include <vector>
-#include "Vec3f.h"
+#include "prim/Vec3f.h"
 #include "ObjIns.h"
 #ifndef GRAPHNODE
 #define GRAPHNODE

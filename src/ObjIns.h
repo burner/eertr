@@ -1,6 +1,6 @@
 #include <string>
 #include "Obj.h"
-#include "Vec3f.h"
+#include "prim/Vec3f.h"
 
 #ifndef OBJINS
 #define OBJINS
