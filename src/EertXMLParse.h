@@ -14,7 +14,7 @@ class EertXMLParse {
 		GraphNode *current;
 		std::ifstream *inputFileStream;
 		std::string curLine;
-		void parse(std::string& line);
+		void parse(std::string& filename);
 		ObjIns* parseObjIns(std::string& line, int& i);
 		GraphRoot* parseGraphRoot(std::string& line, int& i);
 		GraphNode* parseGraphNode(std::string& line, int& i);
