@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include <string>
+#include <stack>
 #include "ObjIns.h"
 #include "GraphRoot.h"
 #include "GraphNode.h"
@@ -11,7 +12,7 @@
 class EertXMLParse {
 	private:
 		GraphRoot *root;
-		GraphNode *current;
+		std::stack<GraphNode*> currentNode;
 		std::ifstream *inputFileStream;
 		std::string curLine;
 		void parse(std::string& filename);
