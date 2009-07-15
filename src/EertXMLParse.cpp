@@ -18,24 +18,32 @@ void EertXMLParse::parse(std::string& filename) {
 		//get rid of all blank 
 		while(line.at(i) == ' ' || line.at(i) == '\t') i++;
 		//read the type
-		while(line.at(i) != ' ' && line.at(i) != '>' && line.at(i) != '\n') {
+		while(line.at(i) != ' ' && line.at(i) != '\t' && line.at(i) != '\n') {
 			//std::cout<<line.at(i)<<std::endl;
 			type.push_back(line.at(i)); 
 			i++;
 		}
 		
+		if(line.at(i-1) == '\n') {
+			getline(*inputFileStream, curLine);
+			i = 0;
+		}
+		
 		std::cout<<"parse Type "<<type<<std::endl;
 		if(!type.compare("<objIns")) {
-			//parse an obj xml
+			std::cout<<"parse ObjIns in"<<std::endl;
 			parseObjIns(line, i);
+			std::cout<<"parse ObjIns out"<<std::endl;
 		} else if(!type.compare("<graphNode")) {
+			std::cout<<"parse GraphNode in"<<std::endl;
 			GraphNode *tmp = parseGraphNode(line, i);
 			currentNode.top()->insertChild(tmp);
 			currentNode.push(tmp);
+			std::cout<<"parse GraphNode out"<<std::endl;
 		} else if(!type.compare("</grpahNode>")) {
 			currentNode.pop();
 		} else if(!type.compare("<graphRoot")) {
-			std::cout<<"Start prase graphRoot"<<std::endl;
+			std::cout<<"prase graphRoot in"<<std::endl;
 			GraphRoot *tmp = parseGraphRoot(line, i);
 			this->root = tmp;
 			if(currentNode.empty()) {
@@ -44,11 +52,11 @@ void EertXMLParse::parse(std::string& filename) {
 				std::cout<<"Another GraphRoot has been assigned previously"<<std::endl;
 				exit(-1);
 			}
+			std::cout<<"prase graphRoot out"<<std::endl;
 		} else if(!type.compare("</graphRoot>")) {
 			break;
 		}
 		type.clear();
-		i = 0;
 	}
 }
 
@@ -59,10 +67,12 @@ GraphNode* EertXMLParse::parseGraphNode(std::string& line, int& i) {
 	float rotX, rotY, rotZ;
 	
 	while(true) {
-		//std::cout<<"parseGraphNode1"<<std::endl;
+		std::cout<<"parseGraphNode1"<<std::endl;
 		parsedAttri = new std::string;
 		parsedValue = new std::string;
-		while(line.at(i) == ' ' || line.at(i) == '\t') {
+		
+		while(line.at(i) == ' ' || line.at(i) == '\t' || line.at(i) == '\n') {
+			std::cout<<line.at(i)<<std::endl;
 			if(line.at(i) == '\n') { 
 				getline(*inputFileStream, curLine);
 				i = 0;
@@ -133,17 +143,19 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 	std::string *parsedValue;
 	float posX, posY, posZ;
 	float rotX, rotY, rotZ;
-	
+	std::cout<<line.at(i)<<std::endl;
 	while(true) {
+		std::cout<<i<<" "<<line.at(i)<<std::endl;
 		parsedAttri = new std::string;
 		parsedValue = new std::string;
-		while(line.at(i) == ' ' || line.at(i) == '\t') {
-			if(line.at(i) == '\n') { 
-				getline(*inputFileStream, curLine);
-				i = 0;
+		while(true) {
+			std::cout<<line.at(i)<<std::endl;
+			if(line.at(i) == ' ' || line.at(i) == '\t') {
+				i++;
+				continue;
+			} else {
+				break;
 			}
-			if(line.at(i) == '/') break;
-			else i++;
 		}
 		if(line.at(i) == '/') break;
 		while(line.at(i) != '=') {
@@ -151,7 +163,7 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 			i++;
 		}
 		i++;
-		while(line.at(i) != ' ' || line.at(i) != '>') {
+		while(line.at(i) != ' ' && line.at(i) != '/') {
 			parsedValue->push_back(i);
 			i++;
 		}
@@ -178,8 +190,12 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 	delete(parsedAttri);
 	delete(parsedValue);
 	
+
+	
 	toRet->loc = new Vec3f(posX, posY, posZ);
 	toRet->rot = new Vec3f(rotX, rotY, rotZ);
+	
+	//std::cout<<"after objins parse"<<std::endl;
 	
 	//eat the > 
 	i++;
