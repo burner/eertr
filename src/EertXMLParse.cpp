@@ -19,7 +19,8 @@ void EertXMLParse::parse(std::string& filename) {
 		//eat blanks and tabs
 		std::cout<<line<<std::endl;
 		//new line
-		if(line.size() == (unsigned)i-1) {
+		std::cout<<"lineSize "<<line.size()<<" i "<<i<<std::endl;
+		if(line.size() <= (unsigned)i) {
 			getline(*this->inputFileStream, line);
 			i = 0;
 			continue;
@@ -75,49 +76,63 @@ GraphNode* EertXMLParse::parseGraphNode(std::string& line, int& i) {
 	std::string *parsedValue;
 	float posX, posY, posZ;
 	float rotX, rotY, rotZ;
+	parsedAttri = new std::string;
+	parsedValue = new std::string;
 	
-	while(true) {
-		std::cout<<"parseGraphNode1"<<std::endl;
-		parsedAttri = new std::string;
-		parsedValue = new std::string;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	bool nextTime = true;
+	while(true && nextTime) {
+		if(line.size() == (unsigned)i-1) {
+			getline(*this->inputFileStream, line);
+			i = 0;
+			continue;
+		}
 
-		if(parsedAttri->compare("posX")) {
+		if(line.at(i) == ' ' || line.at(i) == '\t') {
+			//std::cout<<i<<" "<<line.at(i)<<" ";
+			i++;
+			continue;
+		}
+		
+		while(line.at(i) != '=') {
+			parsedAttri->push_back(line.at(i));
+			i++;
+		}
+
+		i++;
+		std::cout<<"lineSize "<<line.size()<<std::endl;
+		while(line.size() > (unsigned)i && line.at(i) != ' ' && line.at(i) != '\t' && line.at(i) != '>' ) {
+			parsedValue->push_back(line.at(i));
+			i++;
+		}
+
+		if(line.size() <= (unsigned)i) {
+			getline(*this->inputFileStream, line);
+			i = 0;
+		} else {
+			if(line.at(i) == '>')
+				nextTime = false;
+		}
+
+		if(0 == parsedAttri->compare("posX")) {
 			posX = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("posY")) {
+		} else if(0 == parsedAttri->compare("posY")) {
 			posY = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("posZ")) {
+		} else if(0 == parsedAttri->compare("posZ")) {
 			posZ = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotX")) {
+		} else if(0 == parsedAttri->compare("rotX")) {
 			rotX = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotY")) {
+		} else if(0 == parsedAttri->compare("rotY")) {
 			rotY = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotZ")) {
+		} else if(0 == parsedAttri->compare("rotZ")) {
 			rotZ = (float)atof(parsedValue->c_str());
 		}
-		delete(parsedAttri);
-		delete(parsedValue);
-		
-		if(line.at(i) == '>') {
-			return new GraphNode(currentNode.top(), 
-				new Vec3f(posX, posY, posZ), 
-				new Vec3f(rotX, rotY, rotZ));
-		}
+		parsedAttri->clear();
+		parsedValue->clear();
 	}
 	delete(parsedAttri);
 	delete(parsedValue);
 	
+	i++;
 	return new GraphNode(currentNode.top(), 
 		new Vec3f(posX, posY, posZ), 
 		new Vec3f(rotX, rotY, rotZ));
@@ -137,19 +152,19 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 	std::string *parsedValue;
 	float posX, posY, posZ;
 	float rotX, rotY, rotZ;
-	std::cout<<line.at(i)<<std::endl;
-	while(true) {
-		parsedAttri = new std::string;
-		parsedValue = new std::string;
-		
-		if(line.size() == (unsigned)i-1) {
+	//std::cout<<line.at(i)<<std::endl;
+	parsedAttri = new std::string;
+	parsedValue = new std::string;
+	bool nextTime = true;
+	while(true && nextTime) {
+		if(line.size() <= (unsigned)i) {
 			getline(*this->inputFileStream, line);
 			i = 0;
 			continue;
 		}
 
 		if(line.at(i) == ' ' || line.at(i) == '\t') {
-			std::cout<<i<<" "<<line.at(i)<<" ";
+			//std::cout<<i<<" "<<line.at(i)<<" ";
 			i++;
 			continue;
 		}
@@ -160,31 +175,36 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 		}
 
 		i++;
-
-		while(line.at(i) != ' ' && line.at(i) != '\t') {
+		std::cout<<"lineSize "<<line.size()<<std::endl;
+		while(line.size() > (unsigned)i &&line.at(i) != ' ' && line.at(i) != '\t' && line.at(i) != '/') {
 			parsedValue->push_back(line.at(i));
 			i++;
 		}
-
-		if(parsedAttri->compare("name")) {
-			toRet->name = new std::string(*parsedValue);
-		} else if(parsedAttri->compare("associatedObj")) {
-			toRet->associatedObj = new std::string(*parsedValue);
-		} else if(parsedAttri->compare("posX")) {
-			posX = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("posY")) {
-			posY = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("posZ")) {
-			posZ = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotX")) {
-			rotX = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotY")) {
-			rotY = (float)atof(parsedValue->c_str());
-		} else if(parsedAttri->compare("rotZ")) {
-			rotZ = (float)atof(parsedValue->c_str());
+		if(line.size() > (unsigned)i) {
+			if(line.at(i) == '/')
+				nextTime = false;
 		}
-		delete(parsedAttri);
-		delete(parsedValue);
+
+		if(0 == parsedAttri->compare("name")) {
+			toRet->name = new std::string(*parsedValue);
+		} else if(0 == parsedAttri->compare("associatedObj")) {
+			toRet->associatedObj = new std::string(*parsedValue);
+		} else if(0 == parsedAttri->compare("posX")) {
+			posX = (float)atof(parsedValue->c_str());
+		} else if(0 == parsedAttri->compare("posY")) {
+			posY = (float)atof(parsedValue->c_str());
+		} else if(0 == parsedAttri->compare("posZ")) {
+			posZ = (float)atof(parsedValue->c_str());
+		} else if(0 == parsedAttri->compare("rotX")) {
+			rotX = (float)atof(parsedValue->c_str());
+		} else if(0 == parsedAttri->compare("rotY")) {
+			rotY = (float)atof(parsedValue->c_str());
+		} else if(0 == parsedAttri->compare("rotZ")) {
+			rotZ = (float)atof(parsedValue->c_str());
+			break;
+		}
+		parsedAttri->clear();
+		parsedValue->clear();
 	}
 	delete(parsedAttri);
 	delete(parsedValue);
@@ -195,7 +215,7 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 	//std::cout<<"after objins parse"<<std::endl;
 	
 	//eat the > 
-	i++;
+	i+=3;
 	
 	return toRet;
 }
