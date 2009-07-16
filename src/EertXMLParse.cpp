@@ -48,7 +48,8 @@ void EertXMLParse::parse(std::string& filename) {
 			currentNode.top()->insertChild(tmp);
 			currentNode.push(tmp);
 			std::cout<<"parse GraphNode out"<<std::endl;
-		} else if(0 == type.compare("</grpahNode>")) {
+		} else if(0 == type.compare("</graphNode")) {
+			i++;
 			currentNode.pop();
 		} else if(0 == type.compare("<graphRoot")) {
 			std::cout<<"prase graphRoot in"<<std::endl;
@@ -62,7 +63,7 @@ void EertXMLParse::parse(std::string& filename) {
 			}
 			i++;
 			std::cout<<"prase graphRoot out"<<std::endl;
-		} else if(0 == type.compare("</graphRoot>")) {
+		} else if(0 == type.compare("</graphRoot")) {
 			break;
 		}
 		
