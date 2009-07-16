@@ -1,10 +1,10 @@
 #include "EertXMLParse.h"
 
 EertXMLParse::EertXMLParse(std::string filename) {
-	std::cout<<"EertXMLParse Constructor Entry"<<std::endl;
+	//std::cout<<"EertXMLParse Constructor Entry"<<std::endl;
 	std::cout<<"Trying to parse "<<filename<<std::endl;
 	parse(filename);
-	std::cout<<"EertXMLParse Constructor Exit"<<std::endl;
+	//std::cout<<"EertXMLParse Constructor Exit"<<std::endl;
 }
 
 void EertXMLParse::parse(std::string& filename) {
@@ -17,9 +17,9 @@ void EertXMLParse::parse(std::string& filename) {
 	getline(*this->inputFileStream, line);
 	while(true) {
 		//eat blanks and tabs
-		std::cout<<line<<std::endl;
+		//std::cout<<line<<std::endl;
 		//new line
-		std::cout<<"lineSize "<<line.size()<<" i "<<i<<std::endl;
+		//std::cout<<"lineSize "<<line.size()<<" i "<<i<<std::endl;
 		if(line.size() <= (unsigned)i) {
 			getline(*this->inputFileStream, line);
 			i = 0;
@@ -27,7 +27,7 @@ void EertXMLParse::parse(std::string& filename) {
 		}
 
 		if(line.at(i) == ' ' || line.at(i) == '\t') {
-			std::cout<<i<<" "<<line.at(i)<<" ";
+			//std::cout<<i<<" "<<line.at(i)<<" ";
 			i++;
 			continue;
 		}
@@ -37,22 +37,22 @@ void EertXMLParse::parse(std::string& filename) {
 			i++;
 		}
 		
-		std::cout<<"parse Type "<<type<<std::endl;
+		//std::cout<<"parse Type "<<type<<std::endl;
 		if(0 == type.compare("<objIns")) {
-			std::cout<<"parse ObjIns in"<<std::endl;
+			//std::cout<<"parse ObjIns in"<<std::endl;
 			parseObjIns(line, i);
-			std::cout<<"parse ObjIns out"<<std::endl;
+			//std::cout<<"parse ObjIns out"<<std::endl;
 		} else if(0 == type.compare("<graphNode")) {
-			std::cout<<"parse GraphNode in"<<std::endl;
+			//std::cout<<"parse GraphNode in"<<std::endl;
 			GraphNode *tmp = parseGraphNode(line, i);
 			currentNode.top()->insertChild(tmp);
 			currentNode.push(tmp);
-			std::cout<<"parse GraphNode out"<<std::endl;
+			//std::cout<<"parse GraphNode out"<<std::endl;
 		} else if(0 == type.compare("</graphNode")) {
 			i++;
 			currentNode.pop();
 		} else if(0 == type.compare("<graphRoot")) {
-			std::cout<<"prase graphRoot in"<<std::endl;
+			//std::cout<<"prase graphRoot in"<<std::endl;
 			GraphRoot *tmp = parseGraphRoot(line, i);
 			this->root = tmp;
 			if(currentNode.empty()) {
@@ -62,7 +62,7 @@ void EertXMLParse::parse(std::string& filename) {
 				exit(-1);
 			}
 			i++;
-			std::cout<<"prase graphRoot out"<<std::endl;
+			//std::cout<<"prase graphRoot out"<<std::endl;
 		} else if(0 == type.compare("</graphRoot")) {
 			break;
 		}
@@ -100,7 +100,8 @@ GraphNode* EertXMLParse::parseGraphNode(std::string& line, int& i) {
 		}
 
 		i++;
-		std::cout<<"lineSize "<<line.size()<<std::endl;
+		
+		//std::cout<<"lineSize "<<line.size()<<std::endl;
 		while(line.size() > (unsigned)i && line.at(i) != ' ' && line.at(i) != '\t' && line.at(i) != '>' ) {
 			parsedValue->push_back(line.at(i));
 			i++;
@@ -176,7 +177,8 @@ ObjIns* EertXMLParse::parseObjIns(std::string& line, int& i) {
 		}
 
 		i++;
-		std::cout<<"lineSize "<<line.size()<<std::endl;
+		
+		//std::cout<<"lineSize "<<line.size()<<std::endl;
 		while(line.size() > (unsigned)i &&line.at(i) != ' ' && line.at(i) != '\t' && line.at(i) != '/') {
 			parsedValue->push_back(line.at(i));
 			i++;
