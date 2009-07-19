@@ -9,8 +9,9 @@ Tri::Tri(Vec3f *v1, Vec3f *v2, Vec3f *v3) {
 	this->v3 = v3;
 }
 
-std::string Tri::toString() {
+std::string Tri::print() {
 	std::ostringstream out;
-	out<<"V1 = "<<this->v1->toString()<<" V2 = "<<this->v2->toString()<<" V3 = "<<this->v3->toString();
+	out<<"V1 = "<<this->v1->toString()<<" V2 = "<<this->v2->toString()
+		<<" V3 = "<<this->v3->toString();
 	return out.str();
 }

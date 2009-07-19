@@ -21,5 +21,6 @@ class EertXMLParse {
 		GraphNode* parseGraphNode(std::string& line, int& i);
 	public:
 		EertXMLParse(std::string filename);
+		void print();
 };
 #endif

@@ -16,7 +16,8 @@ class Vec3f {
     void mult(float scalar);
     void div(float scalar);
     Vec3f* getCrossProd(Vec3f *vector);
-    std::string toString();
+    void print();
+	std::string toString();
     float x;
     float y;
     float z;

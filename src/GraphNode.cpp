@@ -18,5 +18,28 @@ GraphNode::GraphNode() {
 }
 
 void GraphNode::insertChild(GraphNode *child) {
-	this->childs.push_back(child);
+	childs.push_back(child);
+}
+
+void GraphNode::insertObjIns(ObjIns *obj) {
+	objects.push_back(obj);
+}
+
+void GraphNode::print() {
+	std::cout<<"GraphNode at "<<this->position->toString()
+		<< " rotation at "<<this->rotation->toString()<<std::endl;
+
+	std::cout<<"Obj assigned to this Node"<<std::endl;
+	for(unsigned i = 0; i < objects.size(); i++) {
+		objects[i]->print();
+	}
+
+	std::cout<<"GraphNode assigned to this Node"<<std::endl;
+	for(unsigned i = 0; i < childs.size(); i++) {
+		childs[i]->print();
+	}
+}
+
+void GraphNode::render() {
+	return;
 }

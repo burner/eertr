@@ -1,10 +1,15 @@
 #include "EertXMLParse.h"
 
 EertXMLParse::EertXMLParse(std::string filename) {
-	//std::cout<<"EertXMLParse Constructor Entry"<<std::endl;
-	std::cout<<"Trying to parse "<<filename<<std::endl;
+	std::cout<<"Trying to parse "<<filename;
 	parse(filename);
-	//std::cout<<"EertXMLParse Constructor Exit"<<std::endl;
+	std::cout<<" done"<<std::endl;
+}
+
+void EertXMLParse::print() {
+	std::cout<<"Printing szene"<<std::endl;
+	this->root->print();
+	std::cout<<"Printing szene done"<<std::endl;
 }
 
 void EertXMLParse::parse(std::string& filename) {
@@ -40,7 +45,7 @@ void EertXMLParse::parse(std::string& filename) {
 		//std::cout<<"parse Type "<<type<<std::endl;
 		if(0 == type.compare("<objIns")) {
 			//std::cout<<"parse ObjIns in"<<std::endl;
-			parseObjIns(line, i);
+			currentNode.top()->insertObjIns(parseObjIns(line, i));
 			//std::cout<<"parse ObjIns out"<<std::endl;
 		} else if(0 == type.compare("<graphNode")) {
 			//std::cout<<"parse GraphNode in"<<std::endl;

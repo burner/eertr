@@ -77,6 +77,10 @@ Vec3f* Vec3f::getCrossProd(Vec3f *vector) {
 			this->x * vector->y - this->y * vector->x);
 }
 
+void Vec3f::print() {
+	std::cout<<"X = "<<this->x<<" Y = "<<this->y<<" Z = "<<this->z<<std::endl;
+}
+
 std::string Vec3f::toString() {
 	std::ostringstream out;
 	out<<"X = "<<this->x<<" Y = "<<this->y<<" Z = "<<this->z;

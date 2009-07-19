@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "Obj.h"
 #include "prim/Vec3f.h"
 
@@ -15,5 +16,6 @@ class ObjIns {
 		
 		ObjIns();
 		void draw();
+		void print();
 };
 #endif
